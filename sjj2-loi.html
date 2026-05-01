@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nouvelle Loi Humaine — sjj2.org</title>
+  <meta name="description" content="Déclaration Universelle des Droits des Personnes et de l'Environnement — Nouvelle Loi Humaine par Julien Claudius Blandin (Ozarkphea)" />
+  <meta name="author" content="Julien Claudius Blandin — Ozarkphea" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0808;
+      --gold: #d4a574;
+      --gold-dim: #a07850;
+      --gold-bright: #e8c89e;
+      --crimson: #8b1a1a;
+      --font-display: "Playfair Display", serif;
+      --font-body: "Cormorant Garamond", serif;
+      --font-script: "Dancing Script", cursive;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--gold-dim);
+      font-family: var(--font-body);
+      font-size: 1.15rem;
+      line-height: 1.75;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Halo subtil en fond */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 30%, rgba(212,165,116,0.04) 0%, transparent 60%);
+      z-index: 0;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 3rem;
+    }
+
+    @media (min-width: 640px) {
+      main { padding: 6rem 2rem 4rem; }
+    }
+
+    /* Sceau / Emblème */
+    .seal {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeIn 1.2s ease-out forwards;
+    }
+    .seal svg { color: var(--gold); }
+
+    /* Titre principal */
+    .title-section {
+      text-align: center;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeSlideUp 1s 0.3s ease-out forwards;
+    }
+    .title-section h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 6vw, 3.5rem);
+      font-weight: 700;
+      color: var(--gold-bright);
+      letter-spacing: 0.04em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .title-section .subtitle {
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      font-weight: 400;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .title-section .subtitle-small {
+      font-family: var(--font-display);
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      font-weight: 300;
+      color: var(--gold-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-top: 0.25rem;
+    }
+
+    /* Séparateur ornemental */
+    .ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 2rem 0;
+    }
+    .ornament .line {
+      flex: 1;
+      height: 1px;
+    }
+    .ornament .line-left {
+      background: linear-gradient(to right, transparent, var(--gold-dim), var(--gold));
+    }
+    .ornament .line-right {
+      background: linear-gradient(to left, transparent, var(--gold-dim), var(--gold));
+    }
+    .ornament svg { color: var(--gold); flex-shrink: 0; }
+
+    /* Titres de section */
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      font-weight: 600;
+      color: var(--gold);
+      text-align: center;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+
+    /* Préambule */
+    .preambule {
+      margin-bottom: 2rem;
+    }
+    .preambule h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      font-weight: 600;
+      color: var(--gold);
+      text-align: center;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .preambule p {
+      text-align: justify;
+      margin-bottom: 1.25rem;
+    }
+    .preambule .proclamation {
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    /* Article */
+    .article {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .article-number {
+      flex-shrink: 0;
+      width: 3.5rem;
+      height: 3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--gold-dim);
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+    .article-number.highlight {
+      border-color: var(--crimson);
+      color: var(--crimson);
+    }
+    .article-content { flex: 1; min-width: 0; }
+    .article-content h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.15rem, 2.5vw, 1.45rem);
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.75rem;
+    }
+    .article-content h3.highlight { color: var(--gold-bright); }
+    .article-content p {
+      text-align: justify;
+    }
+
+    /* Citation principale */
+    .highlight-quote {
+      margin: 3rem 0;
+      padding: 2rem 1.5rem;
+      border-left: 2px solid var(--gold);
+      border-right: 2px solid var(--gold);
+      text-align: center;
+    }
+    .highlight-quote p {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+      font-weight: 600;
+      font-style: italic;
+      color: var(--gold-bright);
+      line-height: 1.4;
+    }
+
+    /* Signature */
+    .signature {
+      text-align: center;
+      margin-top: 4rem;
+      margin-bottom: 3rem;
+    }
+    .signature .line {
+      width: 8rem;
+      height: 1px;
+      background: var(--gold-dim);
+      margin: 0 auto 2rem;
+    }
+    .signature .fait {
+      font-family: var(--font-body);
+      font-style: italic;
+      color: var(--gold-dim);
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+    .signature .name {
+      font-family: var(--font-script);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: var(--gold);
+    }
+    .signature .alias {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 0.85rem;
+      color: var(--gold-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-top: 0.5rem;
+    }
+
+    /* Lien retour */
+    .back-link {
+      text-align: center;
+      padding-bottom: 3rem;
+    }
+    .back-link a {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 0.85rem;
+      color: var(--gold-dim);
+      text-decoration: none;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .back-link a:hover { color: var(--gold); }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- Sceau -->
+    <div class="seal">
+      <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+        <circle cx="40" cy="40" r="38" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+        <circle cx="40" cy="40" r="32" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
+        <line x1="40" y1="18" x2="40" y2="58" stroke="currentColor" stroke-width="1.2" opacity="0.7"/>
+        <line x1="24" y1="30" x2="56" y2="30" stroke="currentColor" stroke-width="1" opacity="0.7"/>
+        <path d="M24 30 L20 42 L28 42 Z" stroke="currentColor" stroke-width="0.8" opacity="0.6" fill="none"/>
+        <path d="M56 30 L52 42 L60 42 Z" stroke="currentColor" stroke-width="0.8" opacity="0.6" fill="none"/>
+        <line x1="32" y1="58" x2="48" y2="58" stroke="currentColor" stroke-width="1.2" opacity="0.7"/>
+      </svg>
+    </div>
+
+    <!-- Titre -->
+    <div class="title-section">
+      <h1>Nouvelle Loi Humaine</h1>
+      <p class="subtitle">Déclaration Universelle des Droits</p>
+      <p class="subtitle-small">des Personnes et de l'Environnement</p>
+    </div>
+
+    <!-- Ornement -->
+    <div class="ornament reveal">
+      <div class="line line-left"></div>
+      <svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 0 L20 10 L10 20 L0 10 Z" fill="currentColor" opacity="0.6"/><path d="M10 4 L16 10 L10 16 L4 10 Z" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.8"/></svg>
+      <div class="line line-right"></div>
+    </div>
+
+    <!-- Préambule -->
+    <section class="preambule reveal">
+      <h2>Préambule</h2>
+      <p>Considérant que la dignité inhérente à tous les membres de la famille humaine et leurs droits égaux et inaliénables constituent le fondement de la liberté, de la justice et de la paix dans le monde.</p>
+      <p>Considérant que la reconnaissance de l'intégrité physique et spirituelle de l'individu est la condition première de toute existence libre.</p>
+      <p>Considérant l'urgence absolue de protéger notre environnement naturel, berceau de toute vie, et la nécessité d'établir un nouveau contrat social et écologique à l'échelle internationale.</p>
+      <p class="proclamation">Nous proclamons par la présente l'avènement d'une Nouvelle Loi Humaine, fondée sur le respect absolu de l'individu, de son enveloppe charnelle unique, et de la nature qui l'accueille.</p>
+    </section>
+
+    <!-- Ornement -->
+    <div class="ornament reveal">
+      <div class="line line-left"></div>
+      <svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 0 L20 10 L10 20 L0 10 Z" fill="currentColor" opacity="0.6"/><path d="M10 4 L16 10 L10 16 L4 10 Z" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.8"/></svg>
+      <div class="line line-right"></div>
+    </div>
+
+    <!-- Titre I -->
+    <h2 class="section-title reveal">Titre I — De l'intégrité et de l'unicité du corps humain</h2>
+
+    <div class="article reveal">
+      <div class="article-number highlight">1</div>
+      <div class="article-content">
+        <h3 class="highlight">Le Droit au Corps Unique</h3>
+        <p>Tout être humain possède un droit inaliénable, sacré et inviolable à l'intégrité de son corps physique. L'unicité du corps est le socle de l'identité individuelle. Nul ne peut être soumis à des altérations, des duplications, des clonages ou des appropriations de son enveloppe corporelle sans son consentement libre, éclairé et absolu.</p>
+      </div>
+    </div>
+
+    <div class="highlight-quote reveal">
+      <p>« Droit à avoir un corps et un seul,<br/>et un seul corps ! »</p>
+    </div>
+
+    <div class="article reveal">
+      <div class="article-number">2</div>
+      <div class="article-content">
+        <h3>Inviolabilité</h3>
+        <p>Le corps humain, ses éléments et ses produits ne peuvent faire l'objet d'un droit patrimonial. Toute atteinte à l'intégrité corporelle non justifiée par une nécessité médicale vitale et consentie est un crime contre la personne.</p>
+      </div>
+    </div>
+
+    <!-- Ornement -->
+    <div class="ornament reveal">
+      <div class="line line-left"></div>
+      <svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 0 L20 10 L10 20 L0 10 Z" fill="currentColor" opacity="0.6"/><path d="M10 4 L16 10 L10 16 L4 10 Z" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.8"/></svg>
+      <div class="line line-right"></div>
+    </div>
+
+    <!-- Titre II -->
+    <h2 class="section-title reveal">Titre II — Des droits fondamentaux de la personne</h2>
+
+    <div class="article reveal">
+      <div class="article-number">3</div>
+      <div class="article-content">
+        <h3>Liberté et Sécurité</h3>
+        <p>Chaque individu a droit à la vie, à la liberté, à la sécurité de sa personne, ainsi qu'au respect de sa vie privée et de ses choix personnels.</p>
+      </div>
+    </div>
+
+    <div class="article reveal">
+      <div class="article-number">4</div>
+      <div class="article-content">
+        <h3>Égalité Absolue</h3>
+        <p>La Nouvelle République Internationale garantit l'égalité de tous devant cette Nouvelle Loi Humaine, sans distinction de race, de couleur, de sexe, de langue, de religion, d'opinion politique, d'origine nationale ou sociale, de fortune, de naissance ou de toute autre situation.</p>
+      </div>
+    </div>
+
+    <!-- Ornement -->
+    <div class="ornament reveal">
+      <div class="line line-left"></div>
+      <svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 0 L20 10 L10 20 L0 10 Z" fill="currentColor" opacity="0.6"/><path d="M10 4 L16 10 L10 16 L4 10 Z" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.8"/></svg>
+      <div class="line line-right"></div>
+    </div>
+
+    <!-- Titre III -->
+    <h2 class="section-title reveal">Titre III — Des droits de l'environnement</h2>
+
+    <div class="article reveal">
+      <div class="article-number">5</div>
+      <div class="article-content">
+        <h3>La Terre comme Entité Vivante</h3>
+        <p>La Terre, ses écosystèmes, sa faune et sa flore sont reconnus comme des entités vivantes dotées de droits propres et inaliénables à exister, prospérer et évoluer.</p>
+      </div>
+    </div>
+
+    <div class="article reveal">
+      <div class="article-number">6</div>
+      <div class="article-content">
+        <h3>Devoir de Préservation</h3>
+        <p>L'humanité a le devoir sacré de préserver, de protéger et de restaurer l'environnement pour les générations présentes et futures. Toute destruction délibérée ou négligence grave envers l'environnement — écocide — est considérée comme un crime contre le vivant, passible des plus hautes sanctions prévues par cette loi.</p>
+      </div>
+    </div>
+
+    <!-- Ornement -->
+    <div class="ornament reveal">
+      <div class="line line-left"></div>
+      <svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 0 L20 10 L10 20 L0 10 Z" fill="currentColor" opacity="0.6"/><path d="M10 4 L16 10 L10 16 L4 10 Z" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.8"/></svg>
+      <div class="line line-right"></div>
+    </div>
+
+    <!-- Titre IV -->
+    <h2 class="section-title reveal">Titre IV — De la justice et de la responsabilité</h2>
+
+    <div class="article reveal">
+      <div class="article-number">7</div>
+      <div class="article-content">
+        <h3>Rôle des Institutions</h3>
+        <p>Les institutions publiques, les ordres professionnels — notamment les ordres des notaires et des avocats en droits civils — et les représentants de l'État sont les garants de cette Nouvelle Loi Humaine. Ils ont l'obligation d'agir avec transparence, intégrité et dans le seul intérêt du bien commun.</p>
+      </div>
+    </div>
+
+    <div class="article reveal">
+      <div class="article-number">8</div>
+      <div class="article-content">
+        <h3>Application Universelle</h3>
+        <p>Cette loi a vocation à s'appliquer universellement. Elle s'impose à toutes les juridictions, aux bancs publics et à toutes les instances de décision, primant sur toute législation antérieure qui lui serait contraire.</p>
+      </div>
+    </div>
+
+    <!-- Ornement final -->
+    <div class="ornament reveal">
+      <div class="line line-left"></div>
+      <svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 0 L20 10 L10 20 L0 10 Z" fill="currentColor" opacity="0.6"/><path d="M10 4 L16 10 L10 16 L4 10 Z" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.8"/></svg>
+      <div class="line line-right"></div>
+    </div>
+
+    <!-- Signature -->
+    <div class="signature reveal">
+      <div class="line"></div>
+      <p class="fait">Fait et proclamé pour la Nouvelle République Internationale.</p>
+      <p class="name">Julien Claudius Blandin</p>
+      <p class="alias">— Ozarkphea —</p>
+    </div>
+
+    <!-- Lien retour -->
+    <div class="back-link reveal">
+      <a href="https://sjj2.org">&#8592; Retour à sjj2.org</a>
+    </div>
+  </main>
+
+  <script>
+    // Intersection Observer pour les animations au scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '-30px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
