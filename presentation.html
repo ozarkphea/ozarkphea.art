@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pr&eacute;sentation — Manifeste des Droits des Personnes et de l'Environnement</title>
+<meta name="description" content="Présentation du Manifeste pour une Nouvelle République Internationale des Droits des Personnes et de l'Environnement — par ozarkphea.">
+<meta property="og:title" content="Présentation — Manifeste ozarkphea">
+<meta property="og:url" content="https://sjj2.org/presentation">
+<link rel="canonical" href="https://sjj2.org/presentation" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg-main: #161618; --bg-card: #383739; --bg-nav: #212122; --bg-elevated: #272728;
+    --text-primary: #dadada; --text-secondary: #acacac; --text-tertiary: #7f7f7f;
+    --accent-gold: #efa201; --accent-red: #eb4d4d; --accent-green: #5eb92d; --accent-blue: #1a93fe;
+    --border-main: rgba(255,255,255,0.08); --border-accent: rgba(239,162,1,0.25);
+  }
+  body { background: var(--bg-main); color: var(--text-primary); font-family: 'Inter', -apple-system, sans-serif; line-height: 1.7; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; padding: 0 1.5rem; height: 52px; background: var(--bg-nav); border-bottom: 1px solid var(--border-main); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.8px; text-transform: uppercase; overflow-x: auto; }
+  .nav-logo { display: flex; align-items: center; gap: 0.5rem; color: var(--text-primary); text-decoration: none; font-weight: 700; font-size: 0.8rem; margin-right: 1.5rem; white-space: nowrap; }
+  .nav-item { display: flex; flex-direction: column; align-items: center; padding: 0.6rem 1rem; color: var(--text-secondary); text-decoration: none; white-space: nowrap; transition: color 0.2s; }
+  .nav-item:hover { color: var(--text-primary); }
+  .nav-item.active { color: var(--accent-gold); }
+  .nav-item .sub { font-size: 0.55rem; color: var(--accent-red); letter-spacing: 0.5px; margin-top: 2px; }
+
+  .hero { padding: 7rem 2rem 3rem; text-align: center; background: radial-gradient(ellipse at 50% 30%, rgba(239,162,1,0.06) 0%, transparent 60%); }
+  .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 1rem; background: rgba(239,162,1,0.12); border: 1px solid var(--border-accent); border-radius: 100px; font-size: 0.7rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-gold); margin-bottom: 1.5rem; }
+  .hero h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: #fff; line-height: 1.3; max-width: 750px; margin: 0 auto 1rem; }
+  .hero .subtitle { font-size: 1rem; font-weight: 300; color: var(--text-secondary); max-width: 550px; margin: 0 auto 1.5rem; }
+  .hero .meta { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-tertiary); letter-spacing: 1px; }
+  .hero .stats { display: flex; gap: 2rem; justify-content: center; margin-top: 2rem; }
+  .hero .stat { display: flex; flex-direction: column; align-items: center; }
+  .hero .stat-num { font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; font-weight: 700; color: var(--accent-gold); }
+  .hero .stat-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-tertiary); margin-top: 0.2rem; }
+
+  .slides-container { max-width: 900px; margin: 0 auto; padding: 2rem 2rem 2rem; }
+  .slide-nav { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+  .slide-dot { width: 32px; height: 4px; border-radius: 2px; background: var(--bg-card); border: none; cursor: pointer; transition: all 0.2s; }
+  .slide-dot.active { background: var(--accent-gold); width: 48px; }
+  .slide-dot:hover { background: var(--text-tertiary); }
+
+  .slide { background: var(--bg-card); border: 1px solid var(--border-main); border-radius: 16px; padding: 3rem; margin-bottom: 1rem; display: none; min-height: 400px; }
+  .slide.active { display: block; }
+  .slide-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-gold); background: rgba(239,162,1,0.12); padding: 0.3rem 0.8rem; border-radius: 4px; display: inline-block; margin-bottom: 1.5rem; }
+  .slide h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.8rem; font-weight: 700; color: #fff; line-height: 1.3; margin-bottom: 1.5rem; }
+  .slide p { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.8; }
+  .slide .quote { border-left: 3px solid var(--accent-gold); padding: 1rem 1.5rem; margin: 1.5rem 0; background: rgba(239,162,1,0.05); border-radius: 0 8px 8px 0; font-style: italic; font-size: 1.05rem; color: var(--text-primary); }
+  .slide .principles { list-style: none; padding: 0; margin: 1rem 0; }
+  .slide .principles li { padding: 0.5rem 0 0.5rem 1.5rem; position: relative; font-size: 0.95rem; color: var(--text-secondary); }
+  .slide .principles li::before { content: '\203A'; position: absolute; left: 0; color: var(--accent-gold); font-weight: 700; font-size: 1.2rem; }
+  .slide .principles li strong { color: var(--text-primary); }
+  .slide .pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+  .slide .pillar { background: var(--bg-elevated); border: 1px solid var(--border-main); border-radius: 10px; padding: 1.2rem; }
+  .slide .pillar-num { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-gold); margin-bottom: 0.3rem; }
+  .slide .pillar h3 { font-size: 0.9rem; font-weight: 600; color: #fff; margin-bottom: 0.3rem; }
+  .slide .pillar p { font-size: 0.75rem; color: var(--text-tertiary); margin: 0; }
+  .slide .stanza { margin-bottom: 1.5rem; font-family: 'Playfair Display', Georgia, serif; font-size: 1.05rem; line-height: 2.2; color: var(--text-primary); font-style: italic; text-align: center; }
+
+  .slide-controls { display: flex; align-items: center; justify-content: space-between; max-width: 900px; margin: 0 auto; padding: 0 2rem 2rem; }
+  .slide-btn { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-gold); background: none; border: 1px solid var(--border-accent); padding: 0.6rem 1.5rem; border-radius: 8px; font-size: 0.72rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; }
+  .slide-btn:hover { background: rgba(239,162,1,0.12); }
+  .slide-btn:disabled { opacity: 0.3; cursor: default; }
+  .slide-counter { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-tertiary); }
+
+  .links { display: flex; gap: 1rem; margin-top: 1rem; justify-content: center; flex-wrap: wrap; padding-bottom: 4rem; }
+  .link-btn { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-gold); text-decoration: none; font-size: 0.72rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; border: 1px solid var(--border-accent); padding: 0.5rem 1.2rem; border-radius: 8px; transition: all 0.2s; }
+  .link-btn:hover { background: rgba(239,162,1,0.12); }
+  .footer { text-align: center; padding: 3rem 2rem; font-size: 0.75rem; color: var(--text-tertiary); border-top: 1px solid var(--border-main); }
+  .footer a { color: var(--accent-gold); text-decoration: none; }
+
+  @media (max-width: 768px) {
+    .hero { padding: 5rem 1.5rem 2rem; }
+    .slides-container { padding: 1.5rem; }
+    .slide { padding: 2rem 1.5rem; }
+    .slide .pillars { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-logo">&#x1F5A4; @OZARKPHEA</a>
+  <a href="/" class="nav-item">&#x1F339; Lettre<span class="sub">sjj2.org</span></a>
+  <a href="/manifeste-droits" class="nav-item">&#x1F4DC; Manifeste<span class="sub">manifeste</span></a>
+  <a href="/poeme" class="nav-item">&#x270D;&#xFE0F; Po&egrave;me<span class="sub">po&egrave;me</span></a>
+  <a href="/presentation" class="nav-item active">&#x1F4CA; Pr&eacute;sentation<span class="sub">slides</span></a>
+  <a href="https://ozarkphea.art" class="nav-item">&#x1F3AC; Archives<span class="sub">ozarkphea.art</span></a>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">&#x1F4CA; Pr&eacute;sentation interactive</div>
+  <h1>Manifeste pour une Nouvelle R&eacute;publique Internationale</h1>
+  <div class="subtitle">Parcourez les articles fondateurs du Manifeste des Droits des Personnes et de l'Environnement</div>
+  <div class="meta">JULIEN BLANDIN &middot; OZARKPHEA &middot; 27 MARS 2026</div>
+  <div class="stats">
+    <div class="stat"><span class="stat-num">8</span><span class="stat-label">Diapositives</span></div>
+    <div class="stat"><span class="stat-num">4</span><span class="stat-label">Articles</span></div>
+    <div class="stat"><span class="stat-num">1</span><span class="stat-label">Po&egrave;me</span></div>
+  </div>
+</div>
+
+<div class="slides-container">
+  <div class="slide-nav" id="slideNav"></div>
+
+  <div class="slide active" data-slide="0">
+    <span class="slide-tag">Diapositive 1/8</span>
+    <h2>Nouvelle R&eacute;publique Internationale des Droits des Personnes et de l'Environnement</h2>
+    <p style="font-size:1.1rem; color:var(--text-primary); font-style:italic;">Un nouveau contrat social et &eacute;cologique s'impose &agrave; l'&eacute;chelle mondiale.</p>
+    <p style="margin-top:2rem;">Ce manifeste proclame l'av&egrave;nement d'une Nouvelle Loi Humaine, fond&eacute;e sur le respect absolu de l'individu et de la nature. Il s'adresse &agrave; chaque citoyen, chaque institution et chaque nation.</p>
+    <p style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:var(--text-tertiary); margin-top:2rem;">27 mars 2026 &mdash; Julien Blandin &middot; ozarkphea</p>
+  </div>
+
+  <div class="slide" data-slide="1">
+    <span class="slide-tag">Pr&eacute;ambule</span>
+    <h2>Un appel &agrave; l'humanit&eacute;</h2>
+    <p>Consid&eacute;rant que la dignit&eacute; inh&eacute;rente &agrave; tous les membres de la famille humaine et leurs droits &eacute;gaux et inali&eacute;nables constituent le fondement de la libert&eacute;, de la justice et de la paix dans le monde.</p>
+    <p>Consid&eacute;rant l'urgence de prot&eacute;ger notre environnement naturel, berceau de toute vie, et la n&eacute;cessit&eacute; d'&eacute;tablir un nouveau contrat social et &eacute;cologique &agrave; l'&eacute;chelle internationale.</p>
+    <div class="quote">&laquo;&nbsp;Nous proclamons l'av&egrave;nement d'une Nouvelle Loi Humaine, fond&eacute;e sur le respect absolu de l'individu et de la nature.&nbsp;&raquo;</div>
+  </div>
+
+  <div class="slide" data-slide="2">
+    <span class="slide-tag">Article 1</span>
+    <h2>L'int&eacute;grit&eacute; du corps humain est un droit sacr&eacute; et inviolable</h2>
+    <div class="quote">&laquo;&nbsp;Droit &agrave; avoir un corps et un seul, et un seul corps&nbsp;!&nbsp;&raquo;</div>
+    <p>Tout &ecirc;tre humain poss&egrave;de un droit inali&eacute;nable &agrave; l'int&eacute;grit&eacute; de son corps physique. L'unicit&eacute; du corps est le socle de l'identit&eacute; individuelle.</p>
+    <p>Nul ne peut &ecirc;tre soumis &agrave; des alt&eacute;rations, des duplications ou des appropriations de son enveloppe corporelle sans son consentement libre, &eacute;clair&eacute; et absolu.</p>
+  </div>
+
+  <div class="slide" data-slide="3">
+    <span class="slide-tag">Article 2</span>
+    <h2>L'&eacute;galit&eacute; de tous devant la Nouvelle Loi Humaine</h2>
+    <p>Chaque individu a droit &agrave; la vie, &agrave; la libert&eacute;, &agrave; la s&eacute;curit&eacute; de sa personne, ainsi qu'au respect de sa vie priv&eacute;e et de ses choix personnels.</p>
+    <p>La Nouvelle R&eacute;publique Internationale garantit l'&eacute;galit&eacute; de tous, sans distinction de&nbsp;:</p>
+    <ul class="principles">
+      <li>Race ou couleur</li>
+      <li>Sexe ou langue</li>
+      <li>Religion ou opinion politique</li>
+      <li>Toute autre situation</li>
+    </ul>
+  </div>
+
+  <div class="slide" data-slide="4">
+    <span class="slide-tag">Article 3</span>
+    <h2>La Terre est une entit&eacute; vivante dot&eacute;e de droits propres</h2>
+    <p>La Terre, ses &eacute;cosyst&egrave;mes, sa faune et sa flore sont reconnus comme des entit&eacute;s vivantes dot&eacute;es de droits propres.</p>
+    <p>L'humanit&eacute; a le devoir sacr&eacute; de pr&eacute;server, de prot&eacute;ger et de restaurer l'environnement naturel pour les g&eacute;n&eacute;rations pr&eacute;sentes et futures.</p>
+    <p>Cet article marque une rupture historique&nbsp;: pour la premi&egrave;re fois, la nature n'est plus un simple objet de droit, mais un <strong style="color:var(--accent-green)">sujet de droit</strong> &agrave; part enti&egrave;re.</p>
+  </div>
+
+  <div class="slide" data-slide="5">
+    <span class="slide-tag">Article 4</span>
+    <h2>Les institutions garantes du bien commun</h2>
+    <p>Les institutions publiques, les ordres professionnels et les repr&eacute;sentants de l'&Eacute;tat sont les garants de cette Nouvelle Loi Humaine. Ils ont l'obligation d'agir avec&nbsp;:</p>
+    <ul class="principles">
+      <li><strong>Transparence</strong> &mdash; rendre compte de chaque d&eacute;cision au peuple</li>
+      <li><strong>Int&eacute;grit&eacute;</strong> &mdash; agir sans corruption ni conflit d'int&eacute;r&ecirc;ts</li>
+      <li><strong>Service du bien commun</strong> &mdash; placer l'int&eacute;r&ecirc;t collectif au-dessus de tout</li>
+    </ul>
+  </div>
+
+  <div class="slide" data-slide="6">
+    <span class="slide-tag">Vue d'ensemble</span>
+    <h2>Les quatre piliers du Manifeste</h2>
+    <div class="pillars">
+      <div class="pillar"><div class="pillar-num">Article 1</div><h3>Int&eacute;grit&eacute; du corps</h3><p>Droit individuel sacr&eacute;</p></div>
+      <div class="pillar"><div class="pillar-num">Article 2</div><h3>&Eacute;galit&eacute; universelle</h3><p>Droits fondamentaux pour tous</p></div>
+      <div class="pillar"><div class="pillar-num">Article 3</div><h3>Droits de la Terre</h3><p>Protection de l'environnement</p></div>
+      <div class="pillar"><div class="pillar-num">Article 4</div><h3>Justice institutionnelle</h3><p>Responsabilit&eacute; des garants</p></div>
+    </div>
+    <p style="text-align:center; color:var(--text-tertiary); font-size:0.85rem; margin-top:1rem;">Ces quatre piliers forment un ensemble indissociable.</p>
+  </div>
+
+  <div class="slide" data-slide="7">
+    <span class="slide-tag">Po&egrave;me &amp; Conclusion</span>
+    <h2 style="text-align:center; font-style:italic; color:var(--accent-gold);">&laquo;&nbsp;Debout, Humanit&eacute;&nbsp;&raquo;</h2>
+    <div class="stanza">Debout, humanit&eacute;, le temps est arriv&eacute;<br>D'&eacute;crire dans la pierre une loi de clart&eacute;,<br>O&ugrave; le corps de chacun, sacr&eacute;, inviolable,<br>Ne sera plus jamais un bien n&eacute;gociable.</div>
+    <div class="stanza">Que la Terre respire et que ses for&ecirc;ts chantent,<br>Que les fleuves s'&eacute;coulent, libres et vivants,<br>Car la nature aussi poss&egrave;de son droit,<br>Elle n'est plus un bien, elle a enfin sa voix.</div>
+    <p style="text-align:center; color:var(--text-tertiary); font-size:0.8rem; font-family:'JetBrains Mono',monospace; margin-top:2rem;">&mdash; ozarkphea, mars 2026</p>
+  </div>
+</div>
+
+<div class="slide-controls">
+  <button class="slide-btn" id="prevBtn" onclick="changeSlide(-1)">&larr; Pr&eacute;c&eacute;dent</button>
+  <span class="slide-counter" id="slideCounter">1 / 8</span>
+  <button class="slide-btn" id="nextBtn" onclick="changeSlide(1)">Suivant &rarr;</button>
+</div>
+
+<div class="links">
+  <a href="/manifeste-droits" class="link-btn">&#x1F4DC; Lire le Manifeste complet</a>
+  <a href="/poeme" class="link-btn">&#x270D;&#xFE0F; Lire le Po&egrave;me</a>
+  <a href="/" class="link-btn">&larr; Retour</a>
+</div>
+
+<div class="footer">
+  <p>sjj2.org &middot; <a href="https://ozarkphea.art">ozarkphea.art</a> &middot; Archives @ozarkphea</p>
+</div>
+
+<script>
+let currentSlide=0;const totalSlides=8;
+function initNav(){const n=document.getElementById('slideNav');for(let i=0;i<totalSlides;i++){const d=document.createElement('button');d.className='slide-dot'+(i===0?' active':'');d.onclick=()=>goToSlide(i);n.appendChild(d)}}
+function goToSlide(n){document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.slide-dot').forEach(d=>d.classList.remove('active'));currentSlide=n;document.querySelector('[data-slide="'+n+'"]').classList.add('active');document.querySelectorAll('.slide-dot')[n].classList.add('active');document.getElementById('slideCounter').textContent=(n+1)+' / '+totalSlides;document.getElementById('prevBtn').disabled=n===0;document.getElementById('nextBtn').disabled=n===totalSlides-1}
+function changeSlide(d){const n=currentSlide+d;if(n>=0&&n<totalSlides)goToSlide(n)}
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key==='ArrowDown')changeSlide(1);if(e.key==='ArrowLeft'||e.key==='ArrowUp')changeSlide(-1)});
+initNav();
+</script>
+</body>
+</html>

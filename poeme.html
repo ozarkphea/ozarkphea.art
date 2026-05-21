@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Debout, Humanit&eacute; — Po&egrave;me par ozarkphea</title>
+<meta name="description" content="Debout, Humanité — Poème inspiré du Manifeste pour une Nouvelle République Internationale des Droits des Personnes et de l'Environnement.">
+<meta property="og:title" content="Debout, Humanité — Poème par ozarkphea">
+<meta property="og:url" content="https://sjj2.org/poeme">
+<link rel="canonical" href="https://sjj2.org/poeme" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg-main: #161618;
+    --bg-card: #383739;
+    --bg-nav: #212122;
+    --bg-elevated: #272728;
+    --text-primary: #dadada;
+    --text-secondary: #acacac;
+    --text-tertiary: #7f7f7f;
+    --accent-gold: #efa201;
+    --accent-red: #eb4d4d;
+    --border-main: rgba(255,255,255,0.08);
+    --border-accent: rgba(239,162,1,0.25);
+  }
+
+  body {
+    background: var(--bg-main);
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.7;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0 1.5rem;
+    height: 52px;
+    background: var(--bg-nav);
+    border-bottom: 1px solid var(--border-main);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    overflow-x: auto;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 0.5rem;
+    color: var(--text-primary); text-decoration: none;
+    font-weight: 700; font-size: 0.8rem;
+    margin-right: 1.5rem; white-space: nowrap;
+  }
+  .nav-item {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 0.6rem 1rem;
+    color: var(--text-secondary); text-decoration: none;
+    white-space: nowrap; transition: color 0.2s;
+  }
+  .nav-item:hover { color: var(--text-primary); }
+  .nav-item.active { color: var(--accent-gold); }
+  .nav-item .sub {
+    font-size: 0.55rem; color: var(--accent-red);
+    letter-spacing: 0.5px; margin-top: 2px;
+  }
+
+  .poem-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 6rem 2rem 4rem;
+    background: radial-gradient(ellipse at 50% 40%, rgba(239,162,1,0.05) 0%, transparent 60%);
+  }
+
+  .poem-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    background: rgba(239,162,1,0.12);
+    border: 1px solid var(--border-accent);
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 2rem;
+  }
+
+  .poem-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    font-style: italic;
+    color: var(--accent-gold);
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .poem-subtitle {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--text-secondary);
+    text-align: center;
+    max-width: 550px;
+    margin-bottom: 0.8rem;
+  }
+
+  .poem-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-tertiary);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+  }
+
+  .poem-container {
+    max-width: 650px;
+    width: 100%;
+  }
+
+  .poem-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-accent);
+    border-radius: 16px;
+    padding: 3rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .poem-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+  }
+
+  .stanza {
+    margin-bottom: 2.5rem;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.15rem;
+    line-height: 2.4;
+    color: var(--text-primary);
+    font-style: italic;
+  }
+  .stanza:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .stanza-divider {
+    width: 40px;
+    height: 1px;
+    background: var(--accent-gold);
+    margin: 0 auto 2.5rem;
+    opacity: 0.5;
+  }
+
+  .poem-author {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-main);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    letter-spacing: 1px;
+  }
+
+  .links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--accent-gold);
+    text-decoration: none;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid var(--border-accent);
+    padding: 0.5rem 1.2rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+  .link-btn:hover {
+    background: rgba(239,162,1,0.12);
+  }
+
+  .footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    border-top: 1px solid var(--border-main);
+  }
+  .footer a { color: var(--accent-gold); text-decoration: none; }
+
+  @media (max-width: 768px) {
+    .poem-page { padding: 5rem 1.5rem 3rem; }
+    .poem-card { padding: 2rem 1.5rem; }
+    .stanza { font-size: 1rem; line-height: 2.2; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-logo">&#x1F5A4; @OZARKPHEA</a>
+  <a href="/" class="nav-item">&#x1F339; Lettre<span class="sub">sjj2.org</span></a>
+  <a href="/manifeste-droits" class="nav-item">&#x1F4DC; Manifeste<span class="sub">manifeste</span></a>
+  <a href="/poeme" class="nav-item active">&#x270D;&#xFE0F; Po&egrave;me<span class="sub">po&egrave;me</span></a>
+  <a href="/presentation" class="nav-item">&#x1F4CA; Pr&eacute;sentation<span class="sub">slides</span></a>
+  <a href="https://ozarkphea.art" class="nav-item">&#x1F3AC; Archives<span class="sub">ozarkphea.art</span></a>
+</nav>
+
+<div class="poem-page">
+  <div class="poem-badge">&#x270D;&#xFE0F; Po&egrave;me original</div>
+  <h1 class="poem-title">&laquo;&nbsp;Debout, Humanit&eacute;&nbsp;&raquo;</h1>
+  <p class="poem-subtitle">Inspir&eacute; du Manifeste pour une Nouvelle R&eacute;publique Internationale des Droits des Personnes et de l'Environnement</p>
+  <div class="poem-meta">Julien Blandin &middot; Ozarkphea &middot; 2026</div>
+
+  <div class="poem-container">
+    <div class="poem-card">
+
+      <div class="stanza">
+        Debout, humanit&eacute;, le temps est arriv&eacute;<br>
+        D'&eacute;crire dans la pierre une loi de clart&eacute;,<br>
+        O&ugrave; le corps de chacun, sacr&eacute;, inviolable,<br>
+        Ne sera plus jamais un bien n&eacute;gociable.
+      </div>
+
+      <div class="stanza-divider"></div>
+
+      <div class="stanza">
+        Que la Terre respire et que ses for&ecirc;ts chantent,<br>
+        Que les fleuves s'&eacute;coulent, libres et vivants,<br>
+        Car la nature aussi poss&egrave;de son droit,<br>
+        Elle n'est plus un bien, elle a enfin sa voix.
+      </div>
+
+      <div class="stanza-divider"></div>
+
+      <div class="stanza">
+        &Eacute;gaux sous le soleil, sans race ni fronti&egrave;re,<br>
+        Libres dans nos pens&eacute;es, debout dans la lumi&egrave;re,<br>
+        Nous proclamons ce jour une loi nouvelle&nbsp;:<br>
+        Le respect de la vie, universelle, &eacute;ternelle.
+      </div>
+
+      <div class="stanza-divider"></div>
+
+      <div class="stanza">
+        Que les garants du peuple marchent droit et juste,<br>
+        Que la transparence soit leur armure robuste,<br>
+        Car ce Manifeste est un serment sacr&eacute;&nbsp;:<br>
+        Prot&eacute;ger l'Homme et la Terre, &agrave; jamais li&eacute;s.
+      </div>
+
+      <div class="poem-author">&mdash; ozarkphea, mars 2026</div>
+    </div>
+
+    <div class="links">
+      <a href="/manifeste-droits" class="link-btn">&#x1F4DC; Lire le Manifeste</a>
+      <a href="/presentation" class="link-btn">&#x1F4CA; Voir la Pr&eacute;sentation</a>
+      <a href="/" class="link-btn">&larr; Retour</a>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <p>sjj2.org &middot; <a href="https://ozarkphea.art">ozarkphea.art</a> &middot; Archives @ozarkphea</p>
+</div>
+
+</body>
+</html>
