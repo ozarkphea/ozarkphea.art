@@ -1,0 +1,10 @@
+{
+  "main_module": "worker_esm.js",
+  "bindings": [
+    {
+      "name": "DB",
+      "type": "d1",
+      "id": "6f5d96c5-54cc-431d-9876-c7a5465757f4"
+    }
+  ]
+}

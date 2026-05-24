@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OZARKPHEA — Statistiques</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0808;
+            --amber: #d4a574;
+            --amber-dim: rgba(212, 165, 116, 0.6);
+            --amber-bg: rgba(212, 165, 116, 0.1);
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--amber);
+            font-family: 'Space Grotesk', sans-serif;
+            background-image: radial-gradient(circle at 50% 30%, rgba(212, 165, 116, 0.05) 0%, transparent 70%);
+            min-height: 100vh;
+        }
+        .mono { font-family: 'IBM Plex Mono', monospace; }
+        .nav-link {
+            transition: all 0.3s ease;
+            border-bottom: 1px solid transparent;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.85rem;
+        }
+        .nav-link:hover {
+            color: #fff;
+            border-bottom: 1px solid var(--amber);
+        }
+        .card {
+            background: rgba(212, 165, 116, 0.03);
+            border: 1px solid rgba(212, 165, 116, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card:hover {
+            background: rgba(212, 165, 116, 0.07);
+            border-color: rgba(212, 165, 116, 0.3);
+            transform: translateY(-4px);
+        }
+        .glow-text {
+            text-shadow: 0 0 20px rgba(212, 165, 116, 0.3);
+        }
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin-bottom: 2rem;
+        }
+        .stat-box {
+            background: rgba(212, 165, 116, 0.05);
+            border: 1px solid rgba(212, 165, 116, 0.15);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 400px;
+            opacity: 0.6;
+        }
+        .spinner {
+            border: 2px solid rgba(212, 165, 116, 0.2);
+            border-top: 2px solid var(--amber);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <header class="max-w-6xl mx-auto mb-16 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-4 glow-text tracking-tighter">OZARKPHEA</h1>
+        <p class="mono text-sm opacity-60 mb-8 uppercase tracking-widest">Statistiques & Analytiques</p>
+        
+        <nav class="flex flex-wrap justify-center gap-x-8 gap-y-4 border-y border-white/5 py-6">
+            <a href="/" class="nav-link">Accueil</a>
+            <a href="/videos" class="nav-link">Vidéos</a>
+            <a href="/manifeste-droits" class="nav-link">Manifeste</a>
+            <a href="/poeme" class="nav-link">Poème</a>
+            <a href="/presentation" class="nav-link">Présentation</a>
+            <a href="/sjj2-loi" class="nav-link">Loi Humaine</a>
+            <a href="/stats" class="nav-link font-bold text-white">Statistiques</a>
+            <a href="https://links.sjj2.org" class="nav-link">Liens</a>
+        </nav>
+    </header>
+
+    <main class="max-w-6xl mx-auto">
+        <!-- Statistiques Clés -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-8 glow-text">Aperçu Général</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="stat-box">
+                    <div class="stat-value" id="total-views">—</div>
+                    <div class="stat-label">Vues Totales</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="total-visitors">—</div>
+                    <div class="stat-label">Visiteurs Uniques</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="avg-daily">—</div>
+                    <div class="stat-label">Moyenne Quotidienne</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Graphique des Vues -->
+        <section class="card p-8 rounded-2xl mb-12">
+            <h3 class="text-xl font-bold mb-6 glow-text">Vues par Jour (30 derniers jours)</h3>
+            <div class="chart-container">
+                <div id="views-loading" class="loading">
+                    <div class="spinner"></div>
+                </div>
+                <canvas id="viewsChart" style="display: none;"></canvas>
+            </div>
+        </section>
+
+        <!-- Graphique des Visiteurs -->
+        <section class="card p-8 rounded-2xl mb-12">
+            <h3 class="text-xl font-bold mb-6 glow-text">Visiteurs Uniques par Jour (30 derniers jours)</h3>
+            <div class="chart-container">
+                <div id="visitors-loading" class="loading">
+                    <div class="spinner"></div>
+                </div>
+                <canvas id="visitorsChart" style="display: none;"></canvas>
+            </div>
+        </section>
+
+        <!-- Graphique Combiné -->
+        <section class="card p-8 rounded-2xl mb-12">
+            <h3 class="text-xl font-bold mb-6 glow-text">Trafic Combiné</h3>
+            <div class="chart-container">
+                <div id="combined-loading" class="loading">
+                    <div class="spinner"></div>
+                </div>
+                <canvas id="combinedChart" style="display: none;"></canvas>
+            </div>
+        </section>
+
+        <!-- Informations -->
+        <section class="text-center mono text-xs opacity-50 mb-8">
+            <p>Les données sont collectées en temps réel via Cloudflare Workers et D1.</p>
+            <p>Mise à jour automatique toutes les 5 minutes.</p>
+        </section>
+    </main>
+
+    <footer class="max-w-6xl mx-auto mt-24 pt-8 border-t border-white/5 text-center mono text-[10px] opacity-40 uppercase tracking-[0.3em]">
+        © 2026 OZARKPHEA — Julien Blandin Claudius — sjj2.org
+    </footer>
+
+    <script>
+        const API_URL = 'https://ozarkphea-stats-api.sjj2-ozarkphea.workers.dev/api/stats';
+        let viewsChartInstance, visitorsChartInstance, combinedChartInstance;
+
+        const chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#d4a574',
+                        font: { family: "'Space Grotesk', sans-serif" }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    ticks: { color: '#d4a574' },
+                    grid: { color: 'rgba(212, 165, 116, 0.1)' }
+                },
+                x: {
+                    ticks: { color: '#d4a574' },
+                    grid: { color: 'rgba(212, 165, 116, 0.1)' }
+                }
+            }
+        };
+
+        async function fetchStats() {
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error('Erreur API');
+                return await response.json();
+            } catch (error) {
+                console.error('Erreur lors de la récupération des stats:', error);
+                return [];
+            }
+        }
+
+        function updateStats(data) {
+            if (!data || data.length === 0) {
+                document.getElementById('total-views').textContent = '0';
+                document.getElementById('total-visitors').textContent = '0';
+                document.getElementById('avg-daily').textContent = '0';
+                return;
+            }
+
+            const totalViews = data.reduce((sum, d) => sum + (d.views || 0), 0);
+            const totalVisitors = data.reduce((sum, d) => sum + (d.visitors || 0), 0);
+            const avgDaily = Math.round(totalViews / data.length);
+
+            document.getElementById('total-views').textContent = totalViews.toLocaleString('fr-FR');
+            document.getElementById('total-visitors').textContent = totalVisitors.toLocaleString('fr-FR');
+            document.getElementById('avg-daily').textContent = avgDaily.toLocaleString('fr-FR');
+        }
+
+        function createViewsChart(data) {
+            const ctx = document.getElementById('viewsChart').getContext('2d');
+            
+            if (viewsChartInstance) viewsChartInstance.destroy();
+            
+            viewsChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.map(d => d.date),
+                    datasets: [{
+                        label: 'Vues',
+                        data: data.map(d => d.views),
+                        borderColor: '#d4a574',
+                        backgroundColor: 'rgba(212, 165, 116, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#d4a574',
+                        pointBorderColor: '#0a0808',
+                        pointBorderWidth: 2
+                    }]
+                },
+                options: chartOptions
+            });
+
+            document.getElementById('views-loading').style.display = 'none';
+            document.getElementById('viewsChart').style.display = 'block';
+        }
+
+        function createVisitorsChart(data) {
+            const ctx = document.getElementById('visitorsChart').getContext('2d');
+            
+            if (visitorsChartInstance) visitorsChartInstance.destroy();
+            
+            visitorsChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.map(d => d.date),
+                    datasets: [{
+                        label: 'Visiteurs Uniques',
+                        data: data.map(d => d.visitors),
+                        borderColor: '#a8d4a5',
+                        backgroundColor: 'rgba(168, 212, 165, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#a8d4a5',
+                        pointBorderColor: '#0a0808',
+                        pointBorderWidth: 2
+                    }]
+                },
+                options: chartOptions
+            });
+
+            document.getElementById('visitors-loading').style.display = 'none';
+            document.getElementById('visitorsChart').style.display = 'block';
+        }
+
+        function createCombinedChart(data) {
+            const ctx = document.getElementById('combinedChart').getContext('2d');
+            
+            if (combinedChartInstance) combinedChartInstance.destroy();
+            
+            combinedChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.map(d => d.date),
+                    datasets: [
+                        {
+                            label: 'Vues',
+                            data: data.map(d => d.views),
+                            backgroundColor: 'rgba(212, 165, 116, 0.7)',
+                            borderColor: '#d4a574',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Visiteurs',
+                            data: data.map(d => d.visitors),
+                            backgroundColor: 'rgba(168, 212, 165, 0.7)',
+                            borderColor: '#a8d4a5',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    ...chartOptions,
+                    scales: {
+                        ...chartOptions.scales,
+                        x: {
+                            ...chartOptions.scales.x,
+                            stacked: false
+                        },
+                        y: {
+                            ...chartOptions.scales.y,
+                            stacked: false
+                        }
+                    }
+                }
+            });
+
+            document.getElementById('combined-loading').style.display = 'none';
+            document.getElementById('combinedChart').style.display = 'block';
+        }
+
+        async function loadAndDisplayStats() {
+            const data = await fetchStats();
+            updateStats(data);
+            
+            if (data.length > 0) {
+                createViewsChart(data);
+                createVisitorsChart(data);
+                createCombinedChart(data);
+            }
+        }
+
+        // Charger les stats au démarrage
+        loadAndDisplayStats();
+
+        // Rafraîchir toutes les 5 minutes
+        setInterval(loadAndDisplayStats, 5 * 60 * 1000);
+    </script>
+</body>
+</html>
