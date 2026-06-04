@@ -89,6 +89,35 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        .btn-period {
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(212, 165, 116, 0.2);
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+        }
+        .btn-period:hover, .btn-period.active {
+            background: var(--amber);
+            color: var(--bg);
+            border-color: var(--amber);
+        }
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #a8d4a5;
+            border-radius: 50%;
+            margin-right: 8px;
+            box-shadow: 0 0 10px #a8d4a5;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
     </style>
     <script defer src="https://manus-analytics.com/umami" data-website-id="3f3db4ef-9849-4911-9d34-e6d0b7482636"></script>
 </head>
@@ -110,6 +139,21 @@
     </header>
 
     <main class="max-w-6xl mx-auto">
+        <!-- Live & Périodes -->
+        <div class="flex flex-wrap justify-between items-center mb-12 gap-6">
+            <div class="flex items-center mono text-sm opacity-80">
+                <span class="live-indicator"></span>
+                LIVE — <span id="active-visitors" class="font-bold text-white ml-1">0</span> VISITEURS EN TEMPS RÉEL
+            </div>
+            <div class="flex gap-2">
+                <button class="btn-period" onclick="changePeriod('24h')">24h</button>
+                <button class="btn-period" onclick="changePeriod('7d')">7j</button>
+                <button class="btn-period active" onclick="changePeriod('30d')">30j</button>
+                <button class="btn-period" onclick="changePeriod('365d')">365j</button>
+                <button class="btn-period" onclick="changePeriod('all')">Tout</button>
+            </div>
+        </div>
+
         <!-- Statistiques Clés -->
         <section class="mb-12">
             <h2 class="text-2xl font-bold mb-8 glow-text">Aperçu Général</h2>
@@ -131,7 +175,7 @@
 
         <!-- Graphique des Vues -->
         <section class="card p-8 rounded-2xl mb-12">
-            <h3 class="text-xl font-bold mb-6 glow-text">Vues par Jour (30 derniers jours)</h3>
+            <h3 class="text-xl font-bold mb-6 glow-text" id="views-chart-title">Vues par Jour (30 derniers jours)</h3>
             <div class="chart-container">
                 <div id="views-loading" class="loading">
                     <div class="spinner"></div>
@@ -142,7 +186,7 @@
 
         <!-- Graphique des Visiteurs -->
         <section class="card p-8 rounded-2xl mb-12">
-            <h3 class="text-xl font-bold mb-6 glow-text">Visiteurs Uniques par Jour (30 derniers jours)</h3>
+            <h3 class="text-xl font-bold mb-6 glow-text" id="visitors-chart-title">Visiteurs Uniques par Jour (30 derniers jours)</h3>
             <div class="chart-container">
                 <div id="visitors-loading" class="loading">
                     <div class="spinner"></div>
@@ -165,7 +209,7 @@
         <!-- Informations -->
         <section class="text-center mono text-xs opacity-50 mb-8">
             <p>Les données sont collectées en temps réel via Cloudflare Workers et D1.</p>
-            <p>Mise à jour automatique toutes les 5 minutes.</p>
+            <p>Mise à jour automatique toutes les 30 secondes pour le temps réel.</p>
         </section>
     </main>
 
@@ -174,7 +218,8 @@
     </footer>
 
     <script>
-        const API_URL = 'https://ozarkphea-stats-api.sjj2-ozarkphea.workers.dev/api/stats';
+        const API_BASE = 'https://ozarkphea-stats-api.sjj2-ozarkphea.workers.dev/api';
+        let currentPeriod = '30d';
         let viewsChartInstance, visitorsChartInstance, combinedChartInstance;
 
         const chartOptions = {
@@ -200,15 +245,51 @@
             }
         };
 
-        async function fetchStats() {
+        async function fetchStats(period) {
             try {
-                const response = await fetch(API_URL);
+                const response = await fetch(`${API_BASE}/stats?period=${period}`);
                 if (!response.ok) throw new Error('Erreur API');
                 return await response.json();
             } catch (error) {
                 console.error('Erreur lors de la récupération des stats:', error);
                 return [];
             }
+        }
+
+        async function fetchActive() {
+            try {
+                const response = await fetch(`${API_BASE}/active`);
+                if (!response.ok) throw new Error('Erreur API');
+                const data = await response.json();
+                document.getElementById('active-visitors').textContent = data.active || 0;
+            } catch (error) {
+                console.error('Erreur lors de la récupération du temps réel:', error);
+            }
+        }
+
+        function changePeriod(period) {
+            currentPeriod = period;
+            
+            // Update UI
+            document.querySelectorAll('.btn-period').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase() === period.replace('d', 'j').toLowerCase() || 
+                    (period === 'all' && btn.textContent.toLowerCase() === 'tout')) {
+                    btn.classList.add('active');
+                }
+            });
+
+            const labels = {
+                '24h': 'Dernières 24h',
+                '7d': '7 derniers jours',
+                '30d': '30 derniers jours',
+                '365d': '365 derniers jours',
+                'all': 'Toutes les données'
+            };
+            document.getElementById('views-chart-title').textContent = `Vues par Jour (${labels[period]})`;
+            document.getElementById('visitors-chart-title').textContent = `Visiteurs Uniques par Jour (${labels[period]})`;
+
+            loadAndDisplayStats();
         }
 
         function updateStats(data) {
@@ -230,9 +311,7 @@
 
         function createViewsChart(data) {
             const ctx = document.getElementById('viewsChart').getContext('2d');
-            
             if (viewsChartInstance) viewsChartInstance.destroy();
-            
             viewsChartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -253,16 +332,13 @@
                 },
                 options: chartOptions
             });
-
             document.getElementById('views-loading').style.display = 'none';
             document.getElementById('viewsChart').style.display = 'block';
         }
 
         function createVisitorsChart(data) {
             const ctx = document.getElementById('visitorsChart').getContext('2d');
-            
             if (visitorsChartInstance) visitorsChartInstance.destroy();
-            
             visitorsChartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -283,16 +359,13 @@
                 },
                 options: chartOptions
             });
-
             document.getElementById('visitors-loading').style.display = 'none';
             document.getElementById('visitorsChart').style.display = 'block';
         }
 
         function createCombinedChart(data) {
             const ctx = document.getElementById('combinedChart').getContext('2d');
-            
             if (combinedChartInstance) combinedChartInstance.destroy();
-            
             combinedChartInstance = new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -314,30 +387,15 @@
                         }
                     ]
                 },
-                options: {
-                    ...chartOptions,
-                    scales: {
-                        ...chartOptions.scales,
-                        x: {
-                            ...chartOptions.scales.x,
-                            stacked: false
-                        },
-                        y: {
-                            ...chartOptions.scales.y,
-                            stacked: false
-                        }
-                    }
-                }
+                options: chartOptions
             });
-
             document.getElementById('combined-loading').style.display = 'none';
             document.getElementById('combinedChart').style.display = 'block';
         }
 
         async function loadAndDisplayStats() {
-            const data = await fetchStats();
+            const data = await fetchStats(currentPeriod);
             updateStats(data);
-            
             if (data.length > 0) {
                 createViewsChart(data);
                 createVisitorsChart(data);
@@ -345,11 +403,13 @@
             }
         }
 
-        // Charger les stats au démarrage
+        // Init
         loadAndDisplayStats();
+        fetchActive();
 
-        // Rafraîchir toutes les 5 minutes
+        // Intervals
         setInterval(loadAndDisplayStats, 5 * 60 * 1000);
+        setInterval(fetchActive, 30 * 1000);
     </script>
 </body>
 </html>
